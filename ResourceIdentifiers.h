@@ -3,6 +3,7 @@
 namespace sf
 {
 	class Font;
+	class SoundBuffer;
 }
 
 namespace Fonts
@@ -16,4 +17,14 @@ namespace Fonts
 template <typename Resource, typename Identifier>
 class ResourceHolder;
 
-typedef ResourceHolder<sf::Font, Fonts::ID> FontHolder;
+namespace SoundEffects
+{
+	enum ID
+	{
+		Bubble,
+		Bonus,
+	};
+}
+
+typedef ResourceHolder<sf::Font, Fonts::ID>                 FontHolder;
+typedef ResourceHolder<sf::SoundBuffer, SoundEffects::ID>   SoundBufferHolder;

@@ -3,8 +3,6 @@
 #include "Constants.h"
 #include "Platform.h"
 
-#include <SFML/Graphics/RenderTarget.hpp>
-
 #include <algorithm>
 #include <cmath>
 #include <numbers>
@@ -56,6 +54,13 @@ namespace Game
         return mStuck;
     }
 
+    bool Ball::takeBounce()
+    {
+        const bool bounced = mBounced;
+        mBounced = false;
+        return bounced;
+    }
+
     void Ball::update(sf::Time dt, const Platform& platform)
     {
         if (mStuck)
@@ -71,27 +76,34 @@ namespace Game
         const float fieldWidth = static_cast<float>(SCREEN_WIDTH);
         const float fieldHeight = static_cast<float>(SCREEN_HEIGHT);
         const sf::FloatRect bounds = mShape.getGlobalBounds();
+        bool bounced = false;
 
         if (bounds.position.x < 0.f)
         {
             position.x -= bounds.position.x;
             mVelocity.x = std::abs(mVelocity.x);
+            bounced = true;
         }
         else if (bounds.position.x + bounds.size.x > fieldWidth)
         {
             position.x -= bounds.position.x + bounds.size.x - fieldWidth;
             mVelocity.x = -std::abs(mVelocity.x);
+            bounced = true;
         }
 
         if (bounds.position.y < 0.f)
         {
             position.y -= bounds.position.y;
             mVelocity.y = std::abs(mVelocity.y);
+            bounced = true;
         }
         else if (bounds.position.y + bounds.size.y > fieldHeight)
         {
             position.y -= bounds.position.y + bounds.size.y - fieldHeight;
-            mVelocity.y = -std::abs(mVelocity.y);
+            mShape.setPosition(position);
+            mFell = true;
+            mBounced = bounced;
+            return;
         }
 
         mShape.setPosition(position);
@@ -100,7 +112,12 @@ namespace Game
         const sf::FloatRect platformBounds = platform.bounds();
         const auto hit = ballBounds.findIntersection(platformBounds);
         if (!hit)
+        {
+            mBounced = bounced;
             return;
+        }
+
+        mBounced = true;
 
         const sf::Vector2f ballCenter = ballBounds.getCenter();
         const sf::Vector2f platformCenter = platformBounds.getCenter();
@@ -135,8 +152,46 @@ namespace Game
         mShape.setPosition(position);
     }
 
-    void Ball::draw(sf::RenderTarget& target) const
+    bool Ball::bounceFrom(const GameObject& object)
     {
-        target.draw(mShape);
+        if (mStuck || mFell || !object.isAlive())
+            return false;
+
+        const auto hit = bounds().findIntersection(object.bounds());
+        if (!hit)
+            return false;
+
+        sf::Vector2f position = mShape.getPosition();
+        const sf::Vector2f ballCenter = bounds().getCenter();
+        const sf::Vector2f objectCenter = object.bounds().getCenter();
+
+        if (hit->size.x < hit->size.y)
+        {
+            position.x += (ballCenter.x < objectCenter.x) ? -hit->size.x : hit->size.x;
+            mVelocity.x = (ballCenter.x < objectCenter.x) ? -std::abs(mVelocity.x) : std::abs(mVelocity.x);
+        }
+        else if (ballCenter.y < objectCenter.y)
+        {
+            position.y -= hit->size.y;
+            mVelocity.y = -std::abs(mVelocity.y);
+        }
+        else
+        {
+            position.y += hit->size.y;
+            mVelocity.y = std::abs(mVelocity.y);
+        }
+
+        mShape.setPosition(position);
+        return true;
+    }
+
+    sf::Shape& Ball::shape()
+    {
+        return mShape;
+    }
+
+    const sf::Shape& Ball::shape() const
+    {
+        return mShape;
     }
 }

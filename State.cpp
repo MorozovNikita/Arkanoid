@@ -2,9 +2,10 @@
 
 #include "StateStack.h"
 
-State::Context::Context(sf::RenderWindow& window, FontHolder& fonts, Game::Settings& settings)
+State::Context::Context(sf::RenderWindow& window, FontHolder& fonts, SoundBufferHolder& soundBuffers, Game::Settings& settings)
 	: window(window)
 	, fonts(fonts)
+	, soundBuffers(soundBuffers)
 	, settings(settings)
 {
 }

@@ -2,7 +2,6 @@
 
 #include "Constants.h"
 
-#include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Mouse.hpp>
@@ -47,14 +46,14 @@ namespace Game
         clampToField();
     }
 
-    void Platform::draw(sf::RenderTarget& target) const
+    sf::Shape& Platform::shape()
     {
-        target.draw(mShape);
+        return mShape;
     }
 
-    sf::FloatRect Platform::bounds() const
+    const sf::Shape& Platform::shape() const
     {
-        return mShape.getGlobalBounds();
+        return mShape;
     }
 
     void Platform::clampToField()

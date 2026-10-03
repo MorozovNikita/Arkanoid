@@ -11,6 +11,7 @@ namespace sf
 {
     class Texture;
     class Font;
+    class SoundBuffer;
 }
 
 template <typename Resource, typename Identifier>

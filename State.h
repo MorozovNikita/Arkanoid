@@ -27,11 +27,12 @@ public:
 
 	struct Context
 	{
-		Context(sf::RenderWindow& window, FontHolder& fonts, Game::Settings& settings);
+		Context(sf::RenderWindow& window, FontHolder& fonts, SoundBufferHolder& soundBuffers, Game::Settings& settings);
 
-		sf::RenderWindow& window;
-		FontHolder&		  fonts;
-		Game::Settings&	  settings;
+		sf::RenderWindow&  window;
+		FontHolder&		   fonts;
+		SoundBufferHolder& soundBuffers;
+		Game::Settings&	   settings;
 	};
 
 public:

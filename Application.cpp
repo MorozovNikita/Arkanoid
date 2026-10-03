@@ -18,8 +18,9 @@ namespace Game
 	Application::Application()
 		: mWindow(sf::VideoMode({ SCREEN_WIDTH, SCREEN_HEIGHT }), "Arkanoid"s, sf::Style::Close)
 		, mFonts()
+		, mSoundBuffers()
 		, mSettings()
-		, mStateStack(State::Context(mWindow, mFonts, mSettings))
+		, mStateStack(State::Context(mWindow, mFonts, mSoundBuffers, mSettings))
 		, mStatisticsText()
 		, mStatisticsUpdateTime()
 		, mStatisticsNumFrames(0)
@@ -27,6 +28,8 @@ namespace Game
 		mWindow.setKeyRepeatEnabled(false);
 
 		mFonts.load(Fonts::Main, RESOURCES_PATH + "\\Fonts\\PressStart2P-Regular.ttf"s);
+		mSoundBuffers.load(SoundEffects::Bubble, RESOURCES_PATH + "\\universfield-bubble-pop-04-323580.mp3"s);
+		mSoundBuffers.load(SoundEffects::Bonus, RESOURCES_PATH + "\\universfield-video-game-bonus-323603.mp3"s);
 
 		mStatisticsText = std::make_unique<sf::Text>(mFonts.get(Fonts::Main));
 		mStatisticsText->setPosition({ 5.f, 5.f });

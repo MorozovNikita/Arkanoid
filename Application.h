@@ -31,6 +31,7 @@ namespace Game
 
 		sf::RenderWindow		  mWindow;
 		FontHolder				  mFonts;
+		SoundBufferHolder		  mSoundBuffers;
 		Settings				  mSettings;
 
 		StateStack				  mStateStack;

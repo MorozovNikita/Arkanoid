@@ -3,8 +3,13 @@
 #include "State.h"
 #include "Platform.h"
 #include "Ball.h"
+#include "Block.h"
 
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include <SFML/Audio/Sound.hpp>
+
+#include <vector>
 
 namespace Game
 {
@@ -18,8 +23,34 @@ namespace Game
         bool handleEvent(const sf::Event& event) override;
 
     private:
+        enum class Phase
+        {
+            Playing,
+            Won,
+            Lost
+        };
+
+        void spawnBlocks();
+        void restart();
+        void showResult(Phase phase);
+        void refreshResult();
+        bool blocksRemain() const;
+        bool handleResultEvent(const sf::Event::KeyPressed& key);
+
         Platform mPlatform;
         Ball mBall;
+        std::vector<Block> mBlocks;
+
         sf::Text mHint;
+        sf::Text mResultTitle;
+        sf::Text mResultQuestion;
+        sf::Text mResultYes;
+        sf::Text mResultNo;
+        sf::RectangleShape mDimmer;
+        sf::Sound mBubbleSound;
+        sf::Sound mBonusSound;
+
+        Phase mPhase = Phase::Playing;
+        int mResultChoice = 0;
     };
 }

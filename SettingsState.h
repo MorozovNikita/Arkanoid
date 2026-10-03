@@ -2,7 +2,6 @@
 
 #include "State.h"
 
-#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
 
 namespace Game
@@ -23,7 +22,5 @@ namespace Game
         sf::Text mTitle;
         sf::Text mHint;
         sf::Text mLabel;
-        sf::RectangleShape mBox;
-        sf::RectangleShape mMark;
     };
 }
