@@ -23,6 +23,8 @@ namespace SoundEffects
 	{
 		Bubble,
 		Bonus,
+		Glass,
+		Wall,
 	};
 }
 

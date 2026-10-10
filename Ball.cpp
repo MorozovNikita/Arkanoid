@@ -1,5 +1,6 @@
 #include "Ball.h"
 
+#include "Collidable.h"
 #include "Constants.h"
 #include "Platform.h"
 
@@ -152,18 +153,26 @@ namespace Game
         mShape.setPosition(position);
     }
 
-    bool Ball::bounceFrom(const GameObject& object)
+    bool Ball::overlaps(const Collidable& object) const
     {
-        if (mStuck || mFell || !object.isAlive())
+        if (mStuck || mFell || !object.canCollide())
             return false;
 
-        const auto hit = bounds().findIntersection(object.bounds());
+        return bounds().findIntersection(object.collisionBounds()).has_value();
+    }
+
+    bool Ball::bounceFrom(const Collidable& object)
+    {
+        if (!overlaps(object))
+            return false;
+
+        const auto hit = bounds().findIntersection(object.collisionBounds());
         if (!hit)
             return false;
 
         sf::Vector2f position = mShape.getPosition();
         const sf::Vector2f ballCenter = bounds().getCenter();
-        const sf::Vector2f objectCenter = object.bounds().getCenter();
+        const sf::Vector2f objectCenter = object.collisionBounds().getCenter();
 
         if (hit->size.x < hit->size.y)
         {

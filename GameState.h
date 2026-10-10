@@ -9,6 +9,7 @@
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Audio/Sound.hpp>
 
+#include <memory>
 #include <vector>
 
 namespace Game
@@ -39,7 +40,7 @@ namespace Game
 
         Platform mPlatform;
         Ball mBall;
-        std::vector<Block> mBlocks;
+        std::vector<std::unique_ptr<Block>> mBlocks;
 
         sf::Text mHint;
         sf::Text mResultTitle;
@@ -49,6 +50,8 @@ namespace Game
         sf::RectangleShape mDimmer;
         sf::Sound mBubbleSound;
         sf::Sound mBonusSound;
+        sf::Sound mGlassSound;
+        sf::Sound mWallSound;
 
         Phase mPhase = Phase::Playing;
         int mResultChoice = 0;

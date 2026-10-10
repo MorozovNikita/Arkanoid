@@ -8,7 +8,12 @@ namespace Game
     void GameObject::draw(sf::RenderTarget& target) const
     {
         if (mAlive)
-            target.draw(shape());
+            drawVisual(target);
+    }
+
+    void GameObject::drawVisual(sf::RenderTarget& target) const
+    {
+        target.draw(shape());
     }
 
     sf::FloatRect GameObject::bounds() const

@@ -30,6 +30,8 @@ namespace Game
 		mFonts.load(Fonts::Main, RESOURCES_PATH + "\\Fonts\\PressStart2P-Regular.ttf"s);
 		mSoundBuffers.load(SoundEffects::Bubble, RESOURCES_PATH + "\\universfield-bubble-pop-04-323580.mp3"s);
 		mSoundBuffers.load(SoundEffects::Bonus, RESOURCES_PATH + "\\universfield-video-game-bonus-323603.mp3"s);
+		mSoundBuffers.load(SoundEffects::Glass, RESOURCES_PATH + "\\glass.mp3"s);
+		mSoundBuffers.load(SoundEffects::Wall, RESOURCES_PATH + "\\wall.mp3"s);
 
 		mStatisticsText = std::make_unique<sf::Text>(mFonts.get(Fonts::Main));
 		mStatisticsText->setPosition({ 5.f, 5.f });

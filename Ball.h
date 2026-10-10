@@ -8,6 +8,7 @@
 
 namespace Game
 {
+    class Collidable;
     class Platform;
 
     class Ball : public GameObject
@@ -19,7 +20,8 @@ namespace Game
         void launch();
         void attachTo(const Platform& platform);
 
-        bool bounceFrom(const GameObject& object);
+        bool bounceFrom(const Collidable& object);
+        bool overlaps(const Collidable& object) const;
         bool isStuck() const;
         bool hasFallen() const { return mFell; }
         bool takeBounce();

@@ -1,9 +1,13 @@
 #include "GameState.h"
 
 #include "Constants.h"
+#include "DurableBlock.h"
+#include "GlassBlock.h"
 #include "ResourceHolder.h"
 #include "Settings.h"
+#include "SmoothDestroyableBlock.h"
 #include "StateIdentifiers.h"
+#include "UnbreakableBlock.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Mouse.hpp>
@@ -32,6 +36,8 @@ namespace Game
         , mDimmer({ static_cast<float>(SCREEN_WIDTH), static_cast<float>(SCREEN_HEIGHT) })
         , mBubbleSound(context.soundBuffers.get(SoundEffects::Bubble))
         , mBonusSound(context.soundBuffers.get(SoundEffects::Bonus))
+        , mGlassSound(context.soundBuffers.get(SoundEffects::Glass))
+        , mWallSound(context.soundBuffers.get(SoundEffects::Wall))
     {
         const bool mouse = context.settings.control == ControlMode::Mouse;
         mHint.setString(mouse ? "Click or Space - launch"s : "Space - launch"s);
@@ -69,7 +75,22 @@ namespace Game
                     startX + column * (BLOCK_WIDTH + BLOCK_GAP_X),
                     BLOCK_FIELD_TOP + row * (BLOCK_HEIGHT + BLOCK_GAP_Y)
                 };
-                mBlocks.emplace_back(position, rowColors[row]);
+
+                switch (column)
+                {
+                case 0:
+                    mBlocks.push_back(std::make_unique<UnbreakableBlock>(position));
+                    break;
+                case 2:
+                    mBlocks.push_back(std::make_unique<DurableBlock>(position, sf::Color(168, 112, 214)));
+                    break;
+                case 4:
+                    mBlocks.push_back(std::make_unique<GlassBlock>(position));
+                    break;
+                default:
+                    mBlocks.push_back(std::make_unique<SmoothDestroyableBlock>(position, rowColors[row]));
+                    break;
+                }
             }
         }
     }
@@ -110,9 +131,9 @@ namespace Game
 
     bool GameState::blocksRemain() const
     {
-        for (const Block& block : mBlocks)
+        for (const auto& block : mBlocks)
         {
-            if (block.isAlive())
+            if (block->mustBeCleared())
                 return true;
         }
         return false;
@@ -123,8 +144,8 @@ namespace Game
         auto& window = getContext().window;
         window.clear(sf::Color(24, 28, 36));
 
-        for (const Block& block : mBlocks)
-            block.draw(window);
+        for (const auto& block : mBlocks)
+            block->draw(window);
 
         mPlatform.draw(window);
         mBall.draw(window);
@@ -160,15 +181,30 @@ namespace Game
             return false;
         }
 
-        for (Block& block : mBlocks)
+        for (auto& block : mBlocks)
         {
-            block.update(dt);
-            if (block.isAlive() && mBall.bounceFrom(block))
+            block->update(dt);
+            if (!block->canCollide())
+                continue;
+
+            const bool hit = block->deflectsBall() ? mBall.bounceFrom(*block) : mBall.overlaps(*block);
+            if (!hit)
+                continue;
+
+            block->OnHit();
+            switch (block->hitSound())
             {
-                block.destroy();
+            case HitSound::Glass:
+                mGlassSound.play();
+                break;
+            case HitSound::Wall:
+                mWallSound.play();
+                break;
+            case HitSound::Bonus:
                 mBonusSound.play();
                 break;
             }
+            break;
         }
 
         if (!blocksRemain())

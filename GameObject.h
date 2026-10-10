@@ -22,6 +22,8 @@ namespace Game
         void destroy() { mAlive = false; }
 
     protected:
+        virtual void drawVisual(sf::RenderTarget& target) const;
+
         virtual sf::Shape& shape() = 0;
         virtual const sf::Shape& shape() const = 0;
 

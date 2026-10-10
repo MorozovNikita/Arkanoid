@@ -142,23 +142,32 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Block.cpp" />
+    <ClCompile Include="DurableBlock.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="GlassBlock.cpp" />
+    <ClCompile Include="IDelayedAction.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="SettingsState.cpp" />
     <ClCompile Include="ArkanoidMain.cpp" />
+    <ClCompile Include="SmoothDestroyableBlock.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateStack.cpp" />
+    <ClCompile Include="UnbreakableBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Ball.h" />
     <ClInclude Include="Block.h" />
+    <ClInclude Include="Collidable.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="DurableBlock.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="GlassBlock.h" />
+    <ClInclude Include="IDelayedAction.h" />
     <ClInclude Include="MenuConstants.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="PauseState.h" />
@@ -167,9 +176,11 @@
     <ClInclude Include="ResourceIdentifiers.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="SettingsState.h" />
+    <ClInclude Include="SmoothDestroyableBlock.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateIdentifiers.h" />
     <ClInclude Include="StateStack.h" />
+    <ClInclude Include="UnbreakableBlock.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ResourceHolder.inl" />
