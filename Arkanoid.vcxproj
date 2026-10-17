@@ -142,32 +142,44 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Block.cpp" />
+    <ClCompile Include="BlockFactory.cpp" />
     <ClCompile Include="DurableBlock.cpp" />
+    <ClCompile Include="DurableBlockFactory.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GlassBlock.cpp" />
+    <ClCompile Include="GlassBlockFactory.cpp" />
     <ClCompile Include="IDelayedAction.cpp" />
+    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="LevelSelectState.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="SettingsState.cpp" />
     <ClCompile Include="ArkanoidMain.cpp" />
     <ClCompile Include="SmoothDestroyableBlock.cpp" />
+    <ClCompile Include="SmoothDestroyableBlockFactory.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateStack.cpp" />
     <ClCompile Include="UnbreakableBlock.cpp" />
+    <ClCompile Include="UnbreakableBlockFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Ball.h" />
     <ClInclude Include="Block.h" />
+    <ClInclude Include="BlockFactory.h" />
     <ClInclude Include="Collidable.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="DurableBlock.h" />
+    <ClInclude Include="DurableBlockFactory.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GlassBlock.h" />
+    <ClInclude Include="GlassBlockFactory.h" />
     <ClInclude Include="IDelayedAction.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="LevelSelectState.h" />
     <ClInclude Include="MenuConstants.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="PauseState.h" />
@@ -177,10 +189,12 @@
     <ClInclude Include="Settings.h" />
     <ClInclude Include="SettingsState.h" />
     <ClInclude Include="SmoothDestroyableBlock.h" />
+    <ClInclude Include="SmoothDestroyableBlockFactory.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateIdentifiers.h" />
     <ClInclude Include="StateStack.h" />
     <ClInclude Include="UnbreakableBlock.h" />
+    <ClInclude Include="UnbreakableBlockFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ResourceHolder.inl" />

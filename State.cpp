@@ -1,12 +1,15 @@
 #include "State.h"
 
+#include "Level.h"
 #include "StateStack.h"
 
-State::Context::Context(sf::RenderWindow& window, FontHolder& fonts, SoundBufferHolder& soundBuffers, Game::Settings& settings)
+State::Context::Context(sf::RenderWindow& window, FontHolder& fonts, SoundBufferHolder& soundBuffers,
+	Game::Settings& settings, Game::Level& level)
 	: window(window)
 	, fonts(fonts)
 	, soundBuffers(soundBuffers)
 	, settings(settings)
+	, level(level)
 {
 }
 

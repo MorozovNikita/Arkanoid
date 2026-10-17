@@ -12,7 +12,7 @@ namespace Game
 		enum ID_POINT
 		{
 			Game,
-			Difficulty,
+			Level,
 			Leaderboard,
 			Settings,
 			Exit

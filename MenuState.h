@@ -29,6 +29,7 @@ namespace Game
         int m_selectedIndex;
 
         sf::Text m_titleText;
+        sf::Text m_levelText;
         std::vector<sf::Text> m_itemTexts;
         sf::VertexArray m_arrow;
     };

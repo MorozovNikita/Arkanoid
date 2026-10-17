@@ -1,13 +1,10 @@
 #include "GameState.h"
 
 #include "Constants.h"
-#include "DurableBlock.h"
-#include "GlassBlock.h"
+#include "Level.h"
 #include "ResourceHolder.h"
 #include "Settings.h"
-#include "SmoothDestroyableBlock.h"
 #include "StateIdentifiers.h"
-#include "UnbreakableBlock.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Mouse.hpp>
@@ -57,42 +54,7 @@ namespace Game
 
     void GameState::spawnBlocks()
     {
-        mBlocks.clear();
-
-        const float gridWidth = BLOCK_COLUMNS * BLOCK_WIDTH + (BLOCK_COLUMNS - 1) * BLOCK_GAP_X;
-        const float startX = (static_cast<float>(SCREEN_WIDTH) - gridWidth) / 2.f;
-        const sf::Color rowColors[] = {
-            sf::Color(220, 82, 86),
-            sf::Color(240, 168, 64),
-            sf::Color(86, 176, 214),
-        };
-
-        for (int row = 0; row < BLOCK_ROWS; ++row)
-        {
-            for (int column = 0; column < BLOCK_COLUMNS; ++column)
-            {
-                const sf::Vector2f position{
-                    startX + column * (BLOCK_WIDTH + BLOCK_GAP_X),
-                    BLOCK_FIELD_TOP + row * (BLOCK_HEIGHT + BLOCK_GAP_Y)
-                };
-
-                switch (column)
-                {
-                case 0:
-                    mBlocks.push_back(std::make_unique<UnbreakableBlock>(position));
-                    break;
-                case 2:
-                    mBlocks.push_back(std::make_unique<DurableBlock>(position, sf::Color(168, 112, 214)));
-                    break;
-                case 4:
-                    mBlocks.push_back(std::make_unique<GlassBlock>(position));
-                    break;
-                default:
-                    mBlocks.push_back(std::make_unique<SmoothDestroyableBlock>(position, rowColors[row]));
-                    break;
-                }
-            }
-        }
+        mBlocks = getContext().level.createBlocks();
     }
 
     void GameState::restart()
@@ -182,8 +144,10 @@ namespace Game
         }
 
         for (auto& block : mBlocks)
-        {
             block->update(dt);
+
+        for (auto& block : mBlocks)
+        {
             if (!block->canCollide())
                 continue;
 

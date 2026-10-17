@@ -1,6 +1,7 @@
 #include "MenuState.h"
 
 #include "Constants.h"
+#include "Level.h"
 #include "MenuConstants.h"
 #include "ResourceHolder.h"
 #include "Settings.h"
@@ -15,8 +16,9 @@ namespace Game
         : State(stack, context)
         , m_selectedIndex(0)
         , m_titleText(context.fonts.get(Fonts::Main), "Arkanoid"s)
+        , m_levelText(context.fonts.get(Fonts::Main), ""s, 12)
     {
-        m_items = { "Game"s, "Difficulty"s, "Leaderboard"s, "Settings"s, "Exit"s };
+        m_items = { "Game"s, "Level"s, "Leaderboard"s, "Settings"s, "Exit"s };
 
         m_titleText.setCharacterSize(40);
         m_titleText.setFillColor(sf::Color::White);
@@ -24,6 +26,8 @@ namespace Game
         auto titleBounds = m_titleText.getLocalBounds();
         m_titleText.setOrigin(titleBounds.position + titleBounds.size / 2.f);
         m_titleText.setPosition({ SCREEN_WIDTH / 2.f, 80.f });
+
+        m_levelText.setFillColor(sf::Color(180, 180, 180));
 
         const float centerX = SCREEN_WIDTH / 2.f;
 
@@ -52,6 +56,7 @@ namespace Game
         switch (index)
         {
         case Menu::Game:
+        case Menu::Level:
         case Menu::Settings:
         case Menu::Exit:
             return true;
@@ -82,6 +87,16 @@ namespace Game
         window.clear(sf::Color(30, 30, 30));
 
         window.draw(m_titleText);
+
+        const std::string& levelName = getContext().level.name();
+        if (!levelName.empty())
+        {
+            m_levelText.setString(levelName);
+            const auto levelBounds = m_levelText.getLocalBounds();
+            m_levelText.setOrigin(levelBounds.position + levelBounds.size / 2.f);
+            m_levelText.setPosition({ SCREEN_WIDTH / 2.f, 130.f });
+            window.draw(m_levelText);
+        }
 
         for (const auto& text : m_itemTexts)
             window.draw(text);
@@ -145,6 +160,9 @@ namespace Game
         {
         case Menu::Game:
             requestStackPush(States::Game);
+            break;
+        case Menu::Level:
+            requestStackPush(States::Level);
             break;
         case Menu::Settings:
             requestStackPush(States::Settings);

@@ -40,7 +40,7 @@ namespace Game
 
         Platform mPlatform;
         Ball mBall;
-        std::vector<std::unique_ptr<Block>> mBlocks;
+        std::vector<std::shared_ptr<Block>> mBlocks;
 
         sf::Text mHint;
         sf::Text mResultTitle;

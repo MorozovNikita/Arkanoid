@@ -4,6 +4,7 @@
 #include "ResourceIdentifiers.h"
 #include "StateStack.h"
 #include "Settings.h"
+#include "Level.h"
 
 #include <SFML/System/Time.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -33,6 +34,7 @@ namespace Game
 		FontHolder				  mFonts;
 		SoundBufferHolder		  mSoundBuffers;
 		Settings				  mSettings;
+		Level					  mLevel;
 
 		StateStack				  mStateStack;
 

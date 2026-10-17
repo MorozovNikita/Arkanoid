@@ -23,11 +23,13 @@ namespace Game
 	const float BLOCK_HEIGHT			= 18.f;
 	const float BLOCK_GAP_X				= 10.f;
 	const float BLOCK_GAP_Y				= 10.f;
-	const int   BLOCK_COLUMNS			= 6;
-	const int   BLOCK_ROWS				= 3;
 	const float BLOCK_FIELD_TOP			= 64.f;
 	const float SMOOTH_BLOCK_FADE_TIME	= 1.f;
 	const int   DURABLE_BLOCK_HIT_POINTS = 3;
+
+	const std::string LEVELS_PATH		= "Levels/"s;
+	const int LEVEL_COLUMN_COUNT		= 9;
+	const int LEVEL_ROW_COUNT			= 8;
 
 	const float PAUSE_COUNTDOWN			= 1.f;
 }

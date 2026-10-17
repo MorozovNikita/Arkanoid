@@ -1,0 +1,23 @@
+{
+  "blocks": [
+    { "type": "unbreakable", "column": 0, "row": 0 },
+    { "type": "glass", "column": 1, "row": 0 },
+    { "type": "smooth", "column": 2, "row": 0, "color": [120, 190, 120] },
+    { "type": "durable", "column": 3, "row": 0, "color": [190, 140, 230], "hits": 2 },
+    { "type": "smooth", "column": 4, "row": 0, "color": [120, 190, 120] },
+    { "type": "durable", "column": 5, "row": 0, "color": [190, 140, 230], "hits": 2 },
+    { "type": "smooth", "column": 6, "row": 0, "color": [120, 190, 120] },
+    { "type": "glass", "column": 7, "row": 0 },
+    { "type": "unbreakable", "column": 8, "row": 0 },
+
+    { "type": "smooth", "column": 0, "row": 7, "color": [230, 120, 90] },
+    { "type": "smooth", "column": 1, "row": 7, "color": [230, 170, 70] },
+    { "type": "smooth", "column": 2, "row": 7, "color": [230, 210, 80] },
+    { "type": "glass", "column": 3, "row": 7 },
+    { "type": "glass", "column": 4, "row": 7 },
+    { "type": "glass", "column": 5, "row": 7 },
+    { "type": "smooth", "column": 6, "row": 7, "color": [230, 210, 80] },
+    { "type": "smooth", "column": 7, "row": 7, "color": [230, 170, 70] },
+    { "type": "smooth", "column": 8, "row": 7, "color": [230, 120, 90] }
+  ]
+}
