@@ -49,6 +49,6 @@ namespace Game
 
     void SmoothDestroyableBlock::FinalAction()
     {
-        destroy();
+        cleared();
     }
 }

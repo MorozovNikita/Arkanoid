@@ -2,6 +2,7 @@
 
 #include "Collidable.h"
 #include "GameObject.h"
+#include "IObserver.h"
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Time.hpp>
@@ -15,7 +16,7 @@ namespace Game
         Wall
     };
 
-    class Block : public GameObject, public Collidable
+    class Block : public GameObject, public Collidable, public IObservable
     {
     public:
         virtual void update(sf::Time dt);
@@ -29,6 +30,8 @@ namespace Game
 
     protected:
         Block(sf::Vector2f position, sf::Color fill, sf::Color outline);
+
+        void cleared();
 
         void setFillColor(sf::Color color);
         void setOutlineColor(sf::Color color);

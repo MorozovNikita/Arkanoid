@@ -37,6 +37,15 @@ namespace Game
         return true;
     }
 
+    void Block::cleared()
+    {
+        if (!isAlive())
+            return;
+
+        destroy();
+        Emit();
+    }
+
     void Block::setFillColor(sf::Color color)
     {
         mShape.setFillColor(color);

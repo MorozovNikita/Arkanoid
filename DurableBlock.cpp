@@ -21,7 +21,7 @@ namespace Game
         --mHitsLeft;
         if (mHitsLeft == 0)
         {
-            destroy();
+            cleared();
             return;
         }
 

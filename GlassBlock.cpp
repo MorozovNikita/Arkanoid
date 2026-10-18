@@ -9,7 +9,7 @@ namespace Game
 
     void GlassBlock::OnHit()
     {
-        destroy();
+        cleared();
     }
 
     bool GlassBlock::deflectsBall() const

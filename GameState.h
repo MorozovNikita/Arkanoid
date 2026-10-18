@@ -4,6 +4,7 @@
 #include "Platform.h"
 #include "Ball.h"
 #include "Block.h"
+#include "IObserver.h"
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
@@ -14,7 +15,7 @@
 
 namespace Game
 {
-    class GameState : public State
+    class GameState : public State, public IObserver, public std::enable_shared_from_this<GameState>
     {
     public:
         GameState(StateStack& stack, State::Context& context);
@@ -22,6 +23,8 @@ namespace Game
         void draw() override;
         bool update(sf::Time dt) override;
         bool handleEvent(const sf::Event& event) override;
+        void attached() override;
+        void Notify(std::shared_ptr<IObservable> observable) override;
 
     private:
         enum class Phase
@@ -32,15 +35,17 @@ namespace Game
         };
 
         void spawnBlocks();
+        void subscribeAll();
+        void beginPlay();
         void restart();
         void showResult(Phase phase);
         void refreshResult();
-        bool blocksRemain() const;
         bool handleResultEvent(const sf::Event::KeyPressed& key);
 
         Platform mPlatform;
-        Ball mBall;
+        std::shared_ptr<Ball> mBall;
         std::vector<std::shared_ptr<Block>> mBlocks;
+        int mBreakableBlocksLeft = 0;
 
         sf::Text mHint;
         sf::Text mResultTitle;

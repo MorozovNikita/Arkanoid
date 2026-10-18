@@ -178,6 +178,7 @@
     <ClInclude Include="GlassBlock.h" />
     <ClInclude Include="GlassBlockFactory.h" />
     <ClInclude Include="IDelayedAction.h" />
+    <ClInclude Include="IObserver.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelSelectState.h" />
     <ClInclude Include="MenuConstants.h" />

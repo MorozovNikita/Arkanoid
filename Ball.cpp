@@ -104,6 +104,7 @@ namespace Game
             mShape.setPosition(position);
             mFell = true;
             mBounced = bounced;
+            Emit();
             return;
         }
 

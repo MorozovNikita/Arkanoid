@@ -24,7 +24,7 @@ namespace Game
     GameState::GameState(StateStack& stack, State::Context& context)
         : State(stack, context)
         , mPlatform()
-        , mBall()
+        , mBall(std::make_shared<Ball>())
         , mHint(context.fonts.get(Fonts::Main), ""s, 14)
         , mResultTitle(context.fonts.get(Fonts::Main), "Congratulations!"s, 28)
         , mResultQuestion(context.fonts.get(Fonts::Main), "Play again?"s, 18)
@@ -48,24 +48,70 @@ namespace Game
         mResultQuestion.setFillColor(sf::Color(200, 200, 200));
 
         spawnBlocks();
-        mBall.attachTo(mPlatform);
+        mBall->attachTo(mPlatform);
         refreshResult();
+    }
+
+    void GameState::attached()
+    {
+        beginPlay();
+    }
+
+    void GameState::Notify(std::shared_ptr<IObservable> observable)
+    {
+        if (mPhase != Phase::Playing)
+            return;
+
+        if (const auto block = std::dynamic_pointer_cast<Block>(observable))
+        {
+            if (mBreakableBlocksLeft > 0)
+                --mBreakableBlocksLeft;
+
+            if (mBreakableBlocksLeft == 0)
+                showResult(Phase::Won);
+        }
+        else if (const auto ball = std::dynamic_pointer_cast<Ball>(observable))
+        {
+            if (ball->hasFallen())
+                showResult(Phase::Lost);
+        }
     }
 
     void GameState::spawnBlocks()
     {
         mBlocks = getContext().level.createBlocks();
+        mBreakableBlocksLeft = 0;
+        for (const auto& block : mBlocks)
+        {
+            if (block->mustBeCleared())
+                ++mBreakableBlocksLeft;
+        }
+    }
+
+    void GameState::subscribeAll()
+    {
+        mBall->AddObserver(weak_from_this());
+        for (const auto& block : mBlocks)
+            block->AddObserver(weak_from_this());
+    }
+
+    void GameState::beginPlay()
+    {
+        subscribeAll();
+        if (mBreakableBlocksLeft == 0)
+            showResult(Phase::Won);
     }
 
     void GameState::restart()
     {
         mPlatform = Platform();
-        mBall = Ball();
-        mBall.attachTo(mPlatform);
+        mBall = std::make_shared<Ball>();
+        mBall->attachTo(mPlatform);
         spawnBlocks();
         mPhase = Phase::Playing;
         mResultChoice = 0;
         refreshResult();
+        beginPlay();
     }
 
     void GameState::showResult(Phase phase)
@@ -91,16 +137,6 @@ namespace Game
         mResultNo.setFillColor(mResultChoice == 1 ? selected : idle);
     }
 
-    bool GameState::blocksRemain() const
-    {
-        for (const auto& block : mBlocks)
-        {
-            if (block->mustBeCleared())
-                return true;
-        }
-        return false;
-    }
-
     void GameState::draw()
     {
         auto& window = getContext().window;
@@ -110,9 +146,9 @@ namespace Game
             block->draw(window);
 
         mPlatform.draw(window);
-        mBall.draw(window);
+        mBall->draw(window);
 
-        if (mPhase == Phase::Playing && mBall.isStuck())
+        if (mPhase == Phase::Playing && mBall->isStuck())
             window.draw(mHint);
 
         if (mPhase == Phase::Playing)
@@ -132,26 +168,26 @@ namespace Game
 
         const auto context = getContext();
         mPlatform.update(dt, context.window, context.settings);
-        mBall.update(dt, mPlatform);
+        mBall->update(dt, mPlatform);
 
-        if (mBall.takeBounce())
+        if (mBall->takeBounce())
             mBubbleSound.play();
 
-        if (mBall.hasFallen())
-        {
-            showResult(Phase::Lost);
+        if (mPhase != Phase::Playing)
             return false;
-        }
 
         for (auto& block : mBlocks)
             block->update(dt);
+
+        if (mPhase != Phase::Playing)
+            return false;
 
         for (auto& block : mBlocks)
         {
             if (!block->canCollide())
                 continue;
 
-            const bool hit = block->deflectsBall() ? mBall.bounceFrom(*block) : mBall.overlaps(*block);
+            const bool hit = block->deflectsBall() ? mBall->bounceFrom(*block) : mBall->overlaps(*block);
             if (!hit)
                 continue;
 
@@ -170,9 +206,6 @@ namespace Game
             }
             break;
         }
-
-        if (!blocksRemain())
-            showResult(Phase::Won);
 
         return false;
     }
@@ -210,8 +243,8 @@ namespace Game
             const auto& input = getContext().settings.input;
             if (keyPressed->code == input.pause)
             {
-                if (mBall.isStuck())
-                    mBall.launch();
+                if (mBall->isStuck())
+                    mBall->launch();
                 else
                     requestStackPush(States::Pause);
             }
@@ -228,8 +261,8 @@ namespace Game
 
         if (const auto* mouse = event.getIf<sf::Event::MouseButtonPressed>())
         {
-            if (mouse->button == sf::Mouse::Button::Left && mBall.isStuck())
-                mBall.launch();
+            if (mouse->button == sf::Mouse::Button::Left && mBall->isStuck())
+                mBall->launch();
 
             return false;
         }

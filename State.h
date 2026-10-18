@@ -24,7 +24,7 @@ class StateStack;
 class State
 {
 public:
-	typedef std::unique_ptr<State> Ptr;
+	typedef std::shared_ptr<State> Ptr;
 
 	struct Context
 	{
@@ -45,6 +45,7 @@ public:
 	virtual void		draw() = 0;
 	virtual bool		update(sf::Time dt) = 0;
 	virtual bool		handleEvent(const sf::Event& event) = 0;
+	virtual void		attached() {}
 
 protected:
 	void				requestStackPush(States::ID stateID);

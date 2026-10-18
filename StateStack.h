@@ -74,6 +74,8 @@ void StateStack::registerState(States::ID stateID)
 {
 	mFactories[stateID] = [this]()
 		{
-			return State::Ptr(new T(*this, mContext));
+			auto state = std::make_shared<T>(*this, mContext);
+			state->attached();
+			return state;
 		};
 }

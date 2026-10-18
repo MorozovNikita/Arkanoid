@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
+#include "IObserver.h"
 
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/System/Vector2.hpp>
@@ -11,7 +12,7 @@ namespace Game
     class Collidable;
     class Platform;
 
-    class Ball : public GameObject
+    class Ball : public GameObject, public IObservable
     {
     public:
         Ball();
