@@ -24,30 +24,47 @@ namespace Game
         mShape.setOutlineColor(sf::Color(180, 120, 20));
     }
 
-    void Ball::launch()
+    void Ball::launch(bool mirrored)
     {
         if (!mStuck)
             return;
 
         mStuck = false;
-        mVelocity = 
+        const float angle = mirrored ? std::numbers::pi_v<float> - LaunchAngle : LaunchAngle;
+        mVelocity =
         {
-            std::cos(LaunchAngle) * BALL_SPEED,
-            std::sin(LaunchAngle) * BALL_SPEED
+            std::cos(angle) * BALL_SPEED,
+            std::sin(angle) * BALL_SPEED
         };
     }
 
-    void Ball::attachTo(const Platform& platform)
+    void Ball::attachTo(const Platform& platform, float xOffset)
     {
         mStuck = true;
+        mFell = false;
+        mAttachOffset = xOffset;
         mVelocity = {};
 
         const sf::FloatRect platformBounds = platform.bounds();
         const float diameter = BALL_RADIUS * 2.f;
         mShape.setPosition({
-            platformBounds.position.x + (platformBounds.size.x - diameter) / 2.f,
+            platformBounds.position.x + (platformBounds.size.x - diameter) / 2.f + xOffset,
             platformBounds.position.y - diameter - mShape.getOutlineThickness()
         });
+    }
+
+    void Ball::splitFrom(const Ball& source)
+    {
+        mStuck = false;
+        mFell = false;
+        mBounced = false;
+        mAttachOffset = 0.f;
+        mShape.setPosition(source.mShape.getPosition());
+        mVelocity = source.mVelocity;
+        mVelocity.x = -mVelocity.x;
+
+        if (std::abs(mVelocity.x) < BALL_SPEED * 0.25f)
+            mVelocity.x = source.mVelocity.x >= 0.f ? -BALL_SPEED * 0.45f : BALL_SPEED * 0.45f;
     }
 
     bool Ball::isStuck() const
@@ -66,7 +83,7 @@ namespace Game
     {
         if (mStuck)
         {
-            attachTo(platform);
+            attachTo(platform, mAttachOffset);
             return;
         }
 

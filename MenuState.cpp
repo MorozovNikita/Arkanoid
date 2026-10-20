@@ -58,6 +58,7 @@ namespace Game
         case Menu::Game:
         case Menu::Level:
         case Menu::Settings:
+        case Menu::Leaderboard:
         case Menu::Exit:
             return true;
         default:
@@ -166,6 +167,9 @@ namespace Game
             break;
         case Menu::Settings:
             requestStackPush(States::Settings);
+            break;
+        case Menu::Leaderboard:
+            requestStackPush(States::Leaderboard);
             break;
         case Menu::Exit:
             requestStackPop();

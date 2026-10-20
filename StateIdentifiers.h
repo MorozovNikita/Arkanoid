@@ -9,6 +9,7 @@ namespace States
 		Game,
 		Pause,
 		Settings,
-		Level
+		Level,
+		Leaderboard
 	};
 }

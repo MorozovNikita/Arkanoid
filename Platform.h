@@ -19,6 +19,7 @@ namespace Game
         Platform();
 
         void update(sf::Time dt, const sf::RenderWindow& window, const Settings& settings);
+        void setWidth(float width);
 
     private:
         void clampToField();

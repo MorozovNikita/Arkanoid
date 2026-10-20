@@ -8,6 +8,7 @@
 #include "PauseState.h"
 #include "SettingsState.h"
 #include "LevelSelectState.h"
+#include "LeaderboardState.h"
 
 #include <SFML/Graphics/Font.hpp>
 
@@ -22,7 +23,8 @@ namespace Game
 		, mSoundBuffers()
 		, mSettings()
 		, mLevel(Level::loadDefault())
-		, mStateStack(State::Context(mWindow, mFonts, mSoundBuffers, mSettings, mLevel))
+		, mLeaderboard(LEADERBOARD_PATH)
+		, mStateStack(State::Context(mWindow, mFonts, mSoundBuffers, mSettings, mLevel, mLeaderboard))
 		, mStatisticsText()
 		, mStatisticsUpdateTime()
 		, mStatisticsNumFrames(0)
@@ -116,6 +118,7 @@ namespace Game
 		mStateStack.registerState<PauseState>(States::Pause);
 		mStateStack.registerState<SettingsState>(States::Settings);
 		mStateStack.registerState<LevelSelectState>(States::Level);
+		mStateStack.registerState<LeaderboardState>(States::Leaderboard);
 	}
 
 }

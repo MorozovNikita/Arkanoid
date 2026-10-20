@@ -46,6 +46,18 @@ namespace Game
         clampToField();
     }
 
+    void Platform::setWidth(float width)
+    {
+        const sf::Vector2f size = mShape.getSize();
+        const float centerX = mShape.getPosition().x + size.x / 2.f;
+        mShape.setSize({ width, size.y });
+
+        sf::Vector2f position = mShape.getPosition();
+        position.x = centerX - width / 2.f;
+        mShape.setPosition(position);
+        clampToField();
+    }
+
     sf::Shape& Platform::shape()
     {
         return mShape;

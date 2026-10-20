@@ -4,12 +4,13 @@
 #include "StateStack.h"
 
 State::Context::Context(sf::RenderWindow& window, FontHolder& fonts, SoundBufferHolder& soundBuffers,
-	Game::Settings& settings, Game::Level& level)
+	Game::Settings& settings, Game::Level& level, Game::Leaderboard& leaderboard)
 	: window(window)
 	, fonts(fonts)
 	, soundBuffers(soundBuffers)
 	, settings(settings)
 	, level(level)
+	, leaderboard(leaderboard)
 {
 }
 

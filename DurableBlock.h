@@ -11,6 +11,7 @@ namespace Game
         DurableBlock(sf::Vector2f position, sf::Color color, int hitPoints = DURABLE_BLOCK_HIT_POINTS);
 
         void OnHit() override;
+        int score() const override { return maxHits(); }
 
     protected:
         int hitsLeft() const { return mHitsLeft; }

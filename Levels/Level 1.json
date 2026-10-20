@@ -6,7 +6,7 @@
     { "type": "smooth", "column": 4, "row": 1, "color": [220, 82, 86] },
     { "type": "glass", "column": 5, "row": 1 },
     { "type": "smooth", "column": 6, "row": 1, "color": [220, 82, 86] },
-    { "type": "durable", "column": 7, "row": 1, "color": [168, 112, 214], "hits": 5 },
+    { "type": "durable", "column": 7, "row": 1, "color": [168, 112, 214], "hits": 3 },
 
     { "type": "unbreakable", "column": 1, "row": 2 },
     { "type": "smooth", "column": 2, "row": 2, "color": [240, 168, 64] },
@@ -14,7 +14,7 @@
     { "type": "smooth", "column": 4, "row": 2, "color": [240, 168, 64] },
     { "type": "glass", "column": 5, "row": 2 },
     { "type": "smooth", "column": 6, "row": 2, "color": [240, 168, 64] },
-    { "type": "durable", "column": 7, "row": 2, "color": [168, 112, 214], "hits": 5 },
+    { "type": "durable", "column": 7, "row": 2, "color": [168, 112, 214], "hits": 3 },
 
     { "type": "unbreakable", "column": 1, "row": 3 },
     { "type": "smooth", "column": 2, "row": 3, "color": [86, 176, 214] },
@@ -22,6 +22,6 @@
     { "type": "smooth", "column": 4, "row": 3, "color": [86, 176, 214] },
     { "type": "glass", "column": 5, "row": 3 },
     { "type": "smooth", "column": 6, "row": 3, "color": [86, 176, 214] },
-    { "type": "durable", "column": 7, "row": 3, "color": [168, 112, 214], "hits": 5 }
+    { "type": "durable", "column": 7, "row": 3, "color": [168, 112, 214], "hits": 3 }
   ]
 }

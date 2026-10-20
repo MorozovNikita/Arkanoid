@@ -28,8 +28,19 @@ namespace Game
 	const int   DURABLE_BLOCK_HIT_POINTS = 3;
 
 	const std::string LEVELS_PATH		= "Levels/"s;
+	const std::string LEADERBOARD_PATH	= "leaderboard.txt"s;
 	const int LEVEL_COLUMN_COUNT		= 9;
 	const int LEVEL_ROW_COUNT			= 8;
 
 	const float PAUSE_COUNTDOWN			= 1.f;
+
+	const int   GLASS_BLOCK_SCORE		= 1;
+	const int   SMOOTH_BLOCK_SCORE		= 2;
+	const int   STARTING_LIVES			= 1;
+
+	const float BONUS_DROP_CHANCE		= 0.1f;
+	const float BONUS_FALL_SPEED		= 180.f;
+	const float BONUS_SIZE				= 20.f;
+	const float WIDE_PLATFORM_TIME		= 10.f;
+	const float WIDE_PLATFORM_SCALE		= 1.5f;
 }

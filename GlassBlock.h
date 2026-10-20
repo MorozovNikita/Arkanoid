@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Block.h"
+#include "Constants.h"
 
 namespace Game
 {
@@ -12,5 +13,6 @@ namespace Game
         void OnHit() override;
         bool deflectsBall() const override;
         HitSound hitSound() const override { return HitSound::Glass; }
+        int score() const override { return GLASS_BLOCK_SCORE; }
     };
 }

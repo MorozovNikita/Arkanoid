@@ -5,6 +5,7 @@
 #include "StateStack.h"
 #include "Settings.h"
 #include "Level.h"
+#include "Leaderboard.h"
 
 #include <SFML/System/Time.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -35,6 +36,7 @@ namespace Game
 		SoundBufferHolder		  mSoundBuffers;
 		Settings				  mSettings;
 		Level					  mLevel;
+		Leaderboard				  mLeaderboard;
 
 		StateStack				  mStateStack;
 

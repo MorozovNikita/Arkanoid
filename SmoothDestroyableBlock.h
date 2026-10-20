@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Block.h"
+#include "Constants.h"
 #include "IDelayedAction.h"
 
 namespace Game
@@ -13,6 +14,7 @@ namespace Game
         void update(sf::Time dt) override;
         void OnHit() override;
         bool canCollide() const override;
+        int score() const override { return SMOOTH_BLOCK_SCORE; }
 
     protected:
         void FinalAction() override;

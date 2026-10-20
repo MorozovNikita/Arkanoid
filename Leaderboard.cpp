@@ -1,0 +1,132 @@
+#include "Leaderboard.h"
+
+#include <algorithm>
+#include <fstream>
+
+namespace Game
+{
+    Leaderboard::Leaderboard(std::string path)
+        : mPath(std::move(path))
+    {
+        load();
+    }
+
+    void Leaderboard::sortAndTrim()
+    {
+        std::stable_sort(mRecords.begin(), mRecords.end(), [](const Record& a, const Record& b)
+        {
+            return a.score > b.score;
+        });
+        if (static_cast<int>(mRecords.size()) > StoredCount)
+            mRecords.resize(static_cast<std::size_t>(StoredCount));
+    }
+
+    void Leaderboard::load()
+    {
+        mRecords.clear();
+        std::ifstream in(mPath);
+        if (!in)
+            return;
+
+        std::string line;
+        while (std::getline(in, line))
+        {
+            if (line.empty())
+                continue;
+
+            const auto tab = line.find('\t');
+            if (tab == std::string::npos)
+                continue;
+
+            Record record;
+            try
+            {
+                record.score = std::stoi(line.substr(0, tab));
+            }
+            catch (...)
+            {
+                continue;
+            }
+            record.name = line.substr(tab + 1);
+            if (record.name.empty())
+                record.name = "noname";
+            mRecords.push_back(std::move(record));
+        }
+
+        sortAndTrim();
+    }
+
+    void Leaderboard::save() const
+    {
+        std::ofstream out(mPath, std::ios::trunc);
+        if (!out)
+            return;
+
+        for (const auto& record : mRecords)
+            out << record.score << '\t' << record.name << '\n';
+    }
+
+    bool Leaderboard::isRecord(int score) const
+    {
+        if (static_cast<int>(mRecords.size()) < StoredCount)
+            return true;
+        return score > mRecords.back().score;
+    }
+
+    void Leaderboard::add(std::string name, int score)
+    {
+        if (name.empty())
+            name = "noname";
+        mRecords.push_back(Record{ std::move(name), score });
+        sortAndTrim();
+    }
+
+    void Leaderboard::onSessionFinished(const SessionResult& result)
+    {
+        mSession = result;
+        mHasSession = true;
+        mCommitted = false;
+        mHighlight = -1;
+    }
+
+    bool Leaderboard::sessionNeedsName() const
+    {
+        return mHasSession && !mCommitted && mSession.score > 0 && isRecord(mSession.score);
+    }
+
+    int Leaderboard::commitSession(std::string name)
+    {
+        if (!mHasSession || mCommitted)
+            return mHighlight;
+
+        if (name.empty())
+            name = "noname";
+
+        const int score = mSession.score;
+        const std::string savedName = name;
+        add(std::move(name), score);
+        save();
+        mCommitted = true;
+
+        mHighlight = -1;
+        for (int index = 0; index < static_cast<int>(mRecords.size()); ++index)
+        {
+            const Record& record = mRecords[static_cast<std::size_t>(index)];
+            if (record.score == score && record.name == savedName)
+            {
+                mHighlight = index;
+                break;
+            }
+        }
+
+        return mHighlight;
+    }
+
+    void Leaderboard::clearSession()
+    {
+        mHasSession = false;
+        mCommitted = false;
+        mHighlight = -1;
+        mSession = {};
+    }
+}

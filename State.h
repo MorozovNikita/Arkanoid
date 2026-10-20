@@ -17,6 +17,7 @@ namespace Game
 {
 	struct Settings;
 	class Level;
+	class Leaderboard;
 }
 
 class StateStack;
@@ -29,13 +30,14 @@ public:
 	struct Context
 	{
 		Context(sf::RenderWindow& window, FontHolder& fonts, SoundBufferHolder& soundBuffers,
-			Game::Settings& settings, Game::Level& level);
+			Game::Settings& settings, Game::Level& level, Game::Leaderboard& leaderboard);
 
 		sf::RenderWindow&  window;
 		FontHolder&		   fonts;
 		SoundBufferHolder& soundBuffers;
 		Game::Settings&	   settings;
 		Game::Level&	   level;
+		Game::Leaderboard& leaderboard;
 	};
 
 public:

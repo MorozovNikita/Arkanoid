@@ -23,6 +23,7 @@ namespace Game
         virtual void OnHit() = 0;
         virtual bool mustBeCleared() const;
         virtual HitSound hitSound() const { return HitSound::Bonus; }
+        virtual int score() const { return 0; }
 
         sf::FloatRect collisionBounds() const override;
         bool canCollide() const override;

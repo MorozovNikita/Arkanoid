@@ -18,8 +18,9 @@ namespace Game
         Ball();
 
         void update(sf::Time dt, const Platform& platform);
-        void launch();
-        void attachTo(const Platform& platform);
+        void launch(bool mirrored = false);
+        void attachTo(const Platform& platform, float xOffset = 0.f);
+        void splitFrom(const Ball& source);
 
         bool bounceFrom(const Collidable& object);
         bool overlaps(const Collidable& object) const;
@@ -36,5 +37,6 @@ namespace Game
         bool mStuck = true;
         bool mFell = false;
         bool mBounced = false;
+        float mAttachOffset = 0.f;
     };
 }

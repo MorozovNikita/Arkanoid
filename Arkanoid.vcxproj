@@ -141,6 +141,8 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="Bonus.cpp" />
+    <ClCompile Include="BonusFactory.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BlockFactory.cpp" />
     <ClCompile Include="DurableBlock.cpp" />
@@ -150,6 +152,8 @@
     <ClCompile Include="GlassBlock.cpp" />
     <ClCompile Include="GlassBlockFactory.cpp" />
     <ClCompile Include="IDelayedAction.cpp" />
+    <ClCompile Include="Leaderboard.cpp" />
+    <ClCompile Include="LeaderboardState.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelSelectState.cpp" />
     <ClCompile Include="MenuState.cpp" />
@@ -167,6 +171,8 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="Bonus.h" />
+    <ClInclude Include="BonusFactory.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="BlockFactory.h" />
     <ClInclude Include="Collidable.h" />
@@ -176,9 +182,12 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GlassBlock.h" />
+    <ClInclude Include="Heart.h" />
     <ClInclude Include="GlassBlockFactory.h" />
     <ClInclude Include="IDelayedAction.h" />
     <ClInclude Include="IObserver.h" />
+    <ClInclude Include="Leaderboard.h" />
+    <ClInclude Include="LeaderboardState.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelSelectState.h" />
     <ClInclude Include="MenuConstants.h" />
